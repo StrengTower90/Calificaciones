@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Formulario php</title>
+	<link rel="stylesheet" href="estilo.css" type="text/css">
+	<link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css" type="text/css"/>
+
+</head>
+<body>
+	<div id="principal" style="width: 600px; background: #fff4c4; margin: 50px auto; padding: 10px; border-radius: 10px;" >
+     <header style=" height: 50px; background: #bc8f8f; border-radius: 10px;">
+			<h1>Practica de Php</h1>
+     </header>
+     <section id="formulario" style="width: 400px; margin: 30px auto; padding: 10px; text-align: center; border: solid 1px; border-radius:10px; ">
+	 <form id="miFormulario">
+	    <h2>Formulario</h2>		
+		<p>Nombre:<input type="text" id="Name" class="redondeado" name="nombre" required placeholder="nombre?"></p>
+		<p>Apellido:<input type="text" id="apellido" name="apellido" required placeholder="apellido?"></p>
+		<p>I parcial:<input id="P_parcial" type="number" name="Iparcial" required placeholder="Primer parcial?" pattern="[1-100.]" onkeyup="FinalNote_get(event)" onchange="FinalNote_get(event)"></p>
+		<p>II parcial:<input id="S_parcial" type="number" name="IIparcial" required placeholder="Segundo parcial?" pattern="[1-100.]" onkeyup="FinalNote_get(event)" onchange="FinalNote_get(event)"></p>
+		<p>III parcial:<input id="T_parcial" type="number" name="IIIparcial" required placeholder="Tercer parcial?" pattern="[1-100.]" onkeyup="FinalNote_get(event)" onchange="FinalNote_get(event)"></p>
+		<p>Nota Final:<input id="Nota_final" type="number" name="Nfinal" placeholder="Nota final" pattern="[1-100.]" step="any" readonly="true" /></p>
+		<input type="submit" value="enviar">
+	</form>
+    </section>
+    <section id="medio" style="margin-top: 10px;"></section>
+    <section id="resultado" style=" margin-top: 5px; padding: 5px; background: #f0ffff; border: solid 1px; border-radius: 5px; ">
+    </section>
+    <footer id="pie_pagina">
+    	&copy; Echa Por luis Escalante
+    </footer>
+    </div>
+
+   <script type="text/javascript">
+/*variables de tipo globales utilizadas en las funciones
+FinalNote_get y NotaFinal 
+*/
+		var Pparcial;
+        var Sparcial;
+        var Tparcial;
+
+/*funcion para limpiar las cajas de texto una ves enviado el formulario */
+
+		function clean()
+		{
+			document.getElementById('Name').value ="";
+			document.getElementById('apellido').value ="";
+			document.getElementById('P_parcial').value = "";
+			document.getElementById('S_parcial').value ="";
+			document.getElementById('T_parcial').value ="";
+			document.getElementById('Nota_final').value ="";
+
+		}
+
+/* en esta funcion simplemente se lleva a cabo el filtrado
+de las cajas de texto para solo permitir numeros, 
+y una ves comprobado llamar la funcion NotaFinal()
+*/
+		function FinalNote_get(e)
+		{
+		
+			 Pparcial = document.getElementById('P_parcial').value;
+			 Sparcial = document.getElementById('S_parcial').value;
+			 Tparcial = document.getElementById('T_parcial').value;
+					
+			if (document.activeElement.name == "Iparcial") {
+		        if(e.key == "e" || e.key == "." || e.key == "," || e.key == "-" || e.key == "=" || e.key == "+" || Pparcial < 0)
+		        {
+		          document.getElementById('P_parcial').focus();
+		          document.getElementById('P_parcial').value = "";
+		        }
+		        else if (Pparcial != "" || Pparcial == 0 || Sparcial != "" || Sparcial == 0 || Tparcial != "" || Tparcial == 0)
+		        {
+		          NotaFinal();
+		        }
+	         
+
+	        }
+	        else if (document.activeElement.name == "IIparcial") {
+	          	
+	            if (e.key == "e" || e.key == "." || e.key == "," || e.key == "-" || e.key == "=" || e.key == "+" || Sparcial < 0) {
+	          	document.getElementById('S_parcial').focus();
+	          	document.getElementById('S_parcial').value = "";
+	           	}
+	            else if (Pparcial != "" || Pparcial == 0 || Sparcial != "" || Sparcial == 0 || Tparcial != "" || Tparcial == 0)
+	            { 
+	          	   NotaFinal();
+	          	}
+	        }         
+            else{
+        	if (document.activeElement.name == "IIIparcial") {
+
+		        if (e.key == "e" || e.key == "." || e.key == "," || e.key == "-" || e.key == "=" || e.key == "+" || Tparcial < 0) {
+		        document.getElementById('T_parcial').focus();
+		        document.getElementById('T_parcial').value = "";
+		        }
+		        else if (Pparcial != "" || Pparcial == 0 || Sparcial != "" || Sparcial == 0 || Tparcial != "" || Tparcial == 0){
+		        NotaFinal();
+
+	            }
+	        } 
+            }
+        }
+	
+/*funcion para calcular la nota final 
+ y   agregarla al input Nfinal
+ */
+
+		function NotaFinal(parcial)
+		{
+			 
+			 var p1 = parseInt(Pparcial);
+			 var p2 = parseInt(Sparcial);
+			 var p3 = parseInt(Tparcial);
+			 
+
+			if ( isNaN(p1)){
+             
+                p1 = 0;
+                // alert('if p1:'+p1);
+             if (Sparcial == ""){
+             	p2 = 0;
+             	// alert('if p1;p2:'+p2);
+
+             	if (Tparcial == ""){
+             		p3 = 0;
+             		// alert('if p1;p2;p3:'+p3);
+             	}
+             }
+             else if (Tparcial == "") {
+             	p3 = 0;
+             }
+
+
+            }
+            else if (isNaN(p2)){
+            	p2 = 0; 
+            	// alert('if p2:'+p2);
+              if (Tparcial == ""){
+             	p3 = 0;
+             	// alert('if p2;p3:'+p3);
+
+              }
+            }
+            else {
+            	if (isNaN(p3)){
+            		p3 = 0;
+            		// alert('if p3:'+p3);
+                }
+            }
+           var suma =(p1+p2+p3);
+           var N_final = (suma)/3;
+            document.getElementById('Nota_final').value = N_final;
+		}
+
+/*enviamos los datos de  el formulario. 
+a la pagina guardar.php donde seran insertados en la base de datos calificaciones
+*/   
+		    document.getElementById('miFormulario').onsubmit = function(e){
+            e.preventDefault();
+		
+		     var form = document.getElementById('miFormulario');
+
+			// if (nombre != "" && apellido != "" && Iparcial != "" && IIparcial != "" && IIIparcial != "" && Nfinal != "") {
+            var formdata = new FormData(form);
+			var xhttp = new XMLHttpRequest();
+			
+			xhttp.onreadystatechange = function(){
+				if (xhttp.readyState == 4 && xhttp.status == 200) {
+			         alert('datos enviados');
+					document.getElementById('resultado').innerHTML= xhttp.responseText;
+					if(document.getElementById('medio').innerHTML == ""){
+					    var boto = document.createElement('input');
+	                    boto.type = "submit";
+		                boto.value = "mostrar Datos";
+		                boto.id = "mostrar";
+		                boto.onclick = show_database;
+		                document.getElementById('medio').appendChild(boto);
+                    }
+                 
+					
+					clean();
+				}
+			}
+                  xhttp.open("POST", "guardar.php", true);
+			      // xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			      xhttp.send(formdata);			      
+			      form.reset();
+
+			      
+		}
+    
+    //cargamos la pagina mostrar.php 
+    //para verificar que los datos fueron introducidos.
+		function show_database(){
+		
+		var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function(){
+				if (xhttp.readyState == 4 && xhttp.status == 200) {
+					document.getElementById('resultado').innerHTML= xhttp.responseText;
+                  
+				}
+			};
+			xhttp.open("POST", "mostrar.php", true);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhttp.send("nombre="+'dato1'+"&apellido="
+				+apellido+"&primer_parcial="+'dato2'+"&Segundo_parcial="+'dato3'+"&Tercer_parcial="+'dato4'+"&Nota_Final="+'dato5');
+		}
+
+     
+		
+	</script>
+
+
+	
+</body>
+</html>

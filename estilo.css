@@ -1,0 +1,40 @@
+*{
+	margin: 0px;
+	padding: 0px;
+
+}
+
+#formulario p
+{
+	margin-top: 10px;
+}
+
+input[type=text]
+{
+	border-radius: 10px;
+	height: 30px;
+	border: inset 1px;
+} 
+input[type=number]
+{
+   border-radius: 10px;
+   height: 30px;
+   border: inset 1px;
+}
+#formulario input[type=button], input[type=submit], input[type=reset] {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+#pie_pagina
+{
+  background: white;
+  margin-top: 10px;
+  padding: 10px;
+
+}
